@@ -1,0 +1,4 @@
+singlyLinkedList/.vscode/*
+.DS_Store
+*.out
+LinkedListTests

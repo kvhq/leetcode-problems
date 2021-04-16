@@ -5,9 +5,7 @@
 class MovingAverage {
 public:
     /** Initialize your data structure here. */
-    MovingAverage(int size) {
-        d_size = (size_t)size;
-        d_sum = 0;
+    MovingAverage(int size) : d_size(size), d_sum(0) {
     }
     
     double next(int val) {

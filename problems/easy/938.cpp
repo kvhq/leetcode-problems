@@ -1,3 +1,7 @@
+//Number: 938
+//Name: Range Sum of BST
+//Tags: binary search tree, recursion
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -6,7 +10,7 @@ struct TreeNode {
 };
 
 void countSum(TreeNode* root, int L, int R, int& sum) {
-    if (root == NULL) {
+    if (!root) {
         return;
     }
     if (root->val >= L && root->val <= R) {
@@ -18,7 +22,7 @@ void countSum(TreeNode* root, int L, int R, int& sum) {
     
 int rangeSumBST(TreeNode* root, int L, int R) {
     int answer = 0;
-    if (root == NULL) {
+    if (!root) {
         return 0;
     }
     countSum(root, L, R, answer);

@@ -10,3 +10,23 @@ TreeNode* invertTree(TreeNode* root) {
     return root;
 }
 
+// recursive
+
+class Solution {
+public:
+    void invertChildren(TreeNode* node) {
+        if (!node) return;
+        TreeNode* temp = node->left;
+        node->left = node->right;
+        node->right = temp;
+        invertChildren(node->left);
+        invertChildren(node->right);
+    }
+
+    TreeNode* invertTree(TreeNode* root) {
+        if (!root) return root;
+        invertChildren(root);
+        return root;
+    }
+};
+

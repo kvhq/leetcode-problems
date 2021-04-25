@@ -1,19 +1,13 @@
-// Number: 1
-// Name: Two Sum
-// Tags: hash table
+//Number: 1
+//Name: Two Sum
+//Tags: hash table, array
 
 vector<int> twoSum(vector<int>& nums, int target) {
-    unordered_map<int, int> dict;
-    vector<int> answer;
+    unordered_map<int, int> data;
     for (int i = 0; i < nums.size(); ++i) {
-        if (dict.find(target - nums[i]) != dict.end()) {
-            answer.push_back(i);
-            answer.push_back(dict[target - nums[i]]);
-            return answer;
-        } else {
-            dict[nums[i]] = i;
-        }
+        if (data.find(target - nums[i]) != data.end()) return {i, data[target - nums[i]]};
+        else data[nums[i]] = i;
     }
-    return answer;
+    return {};
 }
 

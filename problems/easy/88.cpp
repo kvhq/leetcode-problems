@@ -29,3 +29,32 @@ public:
     }
 };
 
+// clearer a bit
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        if (nums2.empty()) return;
+        int back_p = n + m - 1;
+        int p_1 = m - 1;
+        int p_2 = n - 1;
+        while (back_p > -1 && p_2 > -1 && p_1 > -1) {
+            if (nums1[p_1] >= nums2[p_2]) {
+                nums1[back_p] = nums1[p_1];
+                p_1--;
+            } else {
+                nums1[back_p] = nums2[p_2];
+                p_2--;
+            }
+            back_p--;
+        }
+        if (p_1 == -1) {
+            while (p_2 > -1) {
+                nums1[back_p] = nums2[p_2];
+                back_p--;
+                p_2--;
+            }
+        }
+        return;
+    }
+};
+

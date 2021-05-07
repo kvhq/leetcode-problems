@@ -2,34 +2,27 @@
 // Name: Verifying an Alien Dictionary
 // Tags: string
 
-bool compareLetters(char c1, char c2, const string& order) {
-    int i1 = 0;
-    int i2 = 0;
-    for (int i = 0; i < order.size(); ++i) {
-        if (order[i] == c1) i1 = i;
-        else if (order[i] == c2) i2 = i;
+class Solution {
+public:
+    bool compareWords(const string& s1, const string& s2, const unordered_map<char, int>& dict) {
+        int len = min(s1.size(), s2.size());
+        for (int i = 0; i < len; ++i) {
+            int p_s1 = dict.at(s1[i]);
+            int p_s2 = dict.at(s2[i]);
+            if (p_s1 != p_s2) return p_s1 < p_s2;
+        }
+        if (s1.size() > s2.size()) return false;
+        return true;
     }
-    return i1 < i2;
-}
-
-bool compareWords(const string& w1, const string& w2, const string& order) {
-    size_t i1 = 0;
-    size_t i2 = 0;
-    while (i1 < w1.size() && i2 < w2.size()) {
-        if (w1[i1] == w2[i2]) {
-            i1++;
-            i2++;
-        } else return compareLetters(w1[i1], w2[i2], order);
+    
+    bool isAlienSorted(vector<string>& words, string order) {
+        if (words.size() == 1) return true;
+        unordered_map<char, int> dict;
+        for (int i = 0; i < order.size(); ++i)
+            dict[order[i]] = i;
+        for (int i = 0; i < words.size() - 1; ++i)
+            if(!compareWords(words[i], words[i + 1], dict)) return false;
+        return true;
     }
-    if (w1.size() < w2.size()) return true;
-    return false;
-}
-
-bool isAlienSorted(vector<string>& words, string order) {
-    if (words.size() <= 1) return true;
-    for(size_t i = 0; i < words.size() - 1; ++i) {
-        if (!compareWords(words[i], words[i + 1], order)) return false;
-    }
-    return true;
-}
+};
 

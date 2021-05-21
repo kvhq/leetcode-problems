@@ -65,3 +65,56 @@ public:
     }
 };
 
+// two queues
+
+class Solution_3 {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (!root->left && !root->right) return true;
+        if (!root->left || !root->right) return false;
+        TreeNode* lRoot = root->left;
+        TreeNode* rRoot = root->right;
+        queue<TreeNode*> leftQ;
+        queue<TreeNode*> rightQ;
+        leftQ.push(lRoot);
+        rightQ.push(rRoot);
+        while (!leftQ.empty()) {
+            if (rightQ.empty()) return false;
+            TreeNode* curNodeLeft = leftQ.front(); leftQ.pop();
+            TreeNode* curNodeRight = rightQ.front(); rightQ.pop();
+            if (!curNodeLeft && !curNodeRight) continue;
+            if (!curNodeLeft || !curNodeRight) return false;
+            if (curNodeLeft->val != curNodeRight->val) return false;
+            if (!curNodeLeft) continue;
+            leftQ.push(curNodeLeft->left);
+            leftQ.push(curNodeLeft->right);
+            rightQ.push(curNodeRight->right);
+            rightQ.push(curNodeRight->left);
+        }
+        return true;
+    }
+};
+
+// one queue, iterative
+
+class Solution_4 {
+public:
+    bool isSymmetric(TreeNode* root) {
+        queue<TreeNode*> q;
+        q.push(root->right);
+        q.push(root->left);
+        while (!q.empty()) {
+            TreeNode* curNodeLeft = q.front(); q.pop();
+            TreeNode* curNodeRight = q.front(); q.pop();
+            if (!curNodeLeft && !curNodeRight) continue;
+            if (!curNodeLeft || !curNodeRight) return false;
+            if (curNodeLeft->val != curNodeRight->val) return false;
+            q.push(curNodeLeft->left);
+            q.push(curNodeRight->right);
+            q.push(curNodeLeft->right);
+            q.push(curNodeRight->left);
+        }
+        return true;
+    }
+};
+

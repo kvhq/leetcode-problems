@@ -1,3 +1,7 @@
+// Number: 136
+// Name: Single Number
+// Tags: Math, Bit Manipulation
+
 int singleNumber(vector<int>& nums) {
     map<int,int> freqMap;
     for (const auto& x : nums) {

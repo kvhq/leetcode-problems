@@ -1,3 +1,7 @@
+// Number: 155
+// Name: Min Stack
+// Tags: stack
+
 class MinStack {
 private:
     std::stack<int> minS;

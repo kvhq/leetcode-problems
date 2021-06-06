@@ -2,7 +2,8 @@
 //Name: Diameter of Binary Tree
 //Tags: tree
 
-class Solution {
+// recursive version 0
+class Solution_0 {
 public:
     int helper(TreeNode* n, int& answer) {
         if (!n) return -1;
@@ -18,4 +19,24 @@ public:
         return max(helper(root, answer), answer);
     }
 };
+
+// recursive version 1
+class Solution_1 {
+public:
+    int helper(TreeNode* node, int& d) {
+        if (!node) return 0;
+        int lhs = helper(node->left, d);
+        int rhs = helper(node->right, d);
+        if (lhs + rhs > d) d = lhs + rhs;
+        return 1 + max(lhs, rhs);
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        int diameter = 0;
+        helper(root->right, diameter);
+        return diameter;
+    }
+};
+
+// iterative solution
 

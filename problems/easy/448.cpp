@@ -43,3 +43,18 @@ vector<int> findDisappearedNumbers(vector<int>& nums) {
     }
     return answer;
 }
+
+// the same but shorter
+vector<int> findDisappearedNumbers(vector<int>& nums) {
+    vector<int> answer;
+    for (int i = 0; i < nums.size(); ) {
+        if (nums[i] == i + 1) i++;
+        else if (nums[i] == nums[nums[i] - 1]) i++;
+        else swap(nums[i], nums[nums[i] - 1]);
+    }
+    for (int i = 0; i < nums.size(); ++i) {
+        if (nums[i] != i + 1) answer.push_back(i + 1);
+    }
+    return answer;
+}
+

@@ -39,5 +39,37 @@ public:
     }
 };
 
-
+// prettier solution
+class Solution_1 {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if (left == right) return head;
+        ListNode* prevLeftNode = nullptr;
+        ListNode* curNode = head;
+        ListNode* nextNode = head->next;
+        int curIndex = 1;
+        // go to curNode == leftNode
+        while (curIndex < left) {
+            prevLeftNode = curNode;
+            curNode = nextNode;
+            nextNode = nextNode->next;
+            curIndex++;
+        }
+        ListNode* prevNode = nullptr;
+        ListNode* leftNode = curNode;
+        while (curIndex < right) {
+            curNode->next = prevNode;
+            prevNode = curNode;
+            curNode = nextNode;
+            nextNode = nextNode->next;
+            curIndex++;
+        }
+        if (prevLeftNode) {
+            prevLeftNode->next = curNode;
+        } else head = curNode;
+        curNode->next = prevNode;
+        leftNode->next = nextNode;
+        return head;
+    }
+};
 

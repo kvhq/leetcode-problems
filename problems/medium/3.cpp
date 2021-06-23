@@ -2,28 +2,23 @@
 // Name: Longest Substring Without Repeating Characters
 // Tags: sliding window, string, hash table
 
-int lengthOfLongestSubstring(string s) {
-    if (s.size() == 0) return 0;
-    unordered_map<char, int> d;
-    d[s[0]] = 0;
-    int start = 0;
-    int cur_len = 1;
-    int ans = 1;
-    for (int i = 1; i < (int)s.size(); ++i) {
-        char cur_c = s[i];
-        if (d.find(cur_c) == d.end()) {
-            d[cur_c] = i;
-            cur_len++;
-            if (cur_len > ans) ans = cur_len;
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char, int> data;
+        int lhs = 0;
+        int answer = 0;
+        for (int rhs = 0; rhs < s.size(); ++rhs) {
+            int curElem = s[rhs];
+            data[curElem]++;
+            while (data[curElem] > 1) {
+                data[s[lhs]]--;
+                if (data[s[lhs]] == 0) data.erase(s[lhs]);
+                lhs++;
+            }
+            answer = max(answer, (int)data.size());
         }
-        else {
-            if (d[cur_c] + 1 > start) start = d[cur_c] + 1;
-            d[cur_c] = i;
-            cur_len = i - start + 1;
-            if (cur_len > ans) ans = cur_len;
-        }
+        return answer;
     }
-    if (cur_len > ans) ans = cur_len;
-    return ans;
-}
+};
 

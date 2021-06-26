@@ -2,34 +2,29 @@
 // Name: Find All Anagrams in a String
 // Tags: hash table, sliding window
 
-vector<int> findAnagrams(string s, string p) {
-    unordered_map<char, int> d;
-    for (const auto& x : p) {
-        d[x]++;
+class Solution {
+public:
+    bool isMatched(const vector<int>& v1, const vector<int>& v2) {
+        if (v1 != v2) return false;
+        return true;
     }
-    int p_s = (int)p.size();
-    int s_s = (int)s.size();
-    vector<int> ans;
-    for (int i = 0; i < p_s; ++i) {
-        if (d.find(s[i]) != d.end()) {
-            d[s[i]]--;
+    
+    vector<int> findAnagrams(string s, string p) {
+        if (p.size() > s.size()) return {};
+        vector<int> p_data(26);
+        vector<int> window(26);
+        vector<int> answer;
+        for (int i = 0; i < p.size(); ++i) {
+            p_data[p[i] - 'a']++;
+            window[s[i] - 'a']++;
         }
-    }
-    bool isOK = true;
-    for (const auto& x : d) {
-        if (x.second != 0) isOK = false;
-    }
-    if (isOK) ans.push_back(0);
-    else isOK = true;
-    for (int i = 1; i <= s_s - p_s; ++i) {
-        if (d.find(s[i - 1]) != d.end()) d[s[i - 1]]++;
-        if (d.find(s[i + p_s - 1]) != d.end()) d[s[i + p_s - 1]]--;
-        for (const auto& x : d) {
-            if (x.second != 0) isOK = false;
+        for (int i = 0; i < s.size() - p.size(); ++i) {
+            if (isMatched(p_data, window)) answer.push_back(i);
+            window[s[p.size() + i] - 'a']++;
+            window[s[i] - 'a']--;
         }
-        if (isOK) ans.push_back(i);
-        else isOK = true;
+        if (isMatched(p_data, window)) answer.push_back(s.size() - p.size());
+        return answer;
     }
-    return ans;
-}
+};
 

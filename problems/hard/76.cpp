@@ -47,6 +47,48 @@ public:
     }
 };
 
-// pretty O(N + M)
-
+// ugly O(N + M)
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string answer = "";
+        int ans_lhs = -1;
+        int ans_rhs = -1;
+        unordered_map<char, int> t_data;
+        for (const auto& x : t) t_data[x]++;
+        unordered_map<char, int> seen;
+        int matched = 0;
+        int lhs = -1;
+        for (int i = 0; i < s.size(); ++i) {
+            if (t_data.find(s[i]) != t_data.end() && lhs == -1) {
+                // we found new substring, so set lhs to its start and update seen
+                lhs = i;
+                seen[s[i]]++;
+                if (seen[s[i]] == t_data[s[i]]) matched++;
+            } else if (t_data.find(s[i]) != t_data.end() && lhs != -1) {
+                // we continue already found substring
+                seen[s[i]]++;
+                if (seen[s[i]] == t_data[s[i]]) matched++;
+            }
+            // here we make a check if it is correct substring
+            while (matched == t_data.size() && lhs < s.size()) {
+                if (i - lhs < ans_rhs - ans_lhs || ans_rhs == -1) {
+                    ans_lhs = lhs;
+                    ans_rhs = i;
+                }
+                seen[s[lhs]]--;
+                if (seen[s[lhs]] < t_data[s[lhs]]) matched--;
+                lhs++;
+                while (lhs <= i && t_data.find(s[lhs]) == t_data.end())
+                       lhs++;
+            }
+        }
+        if (ans_rhs != -1) {
+            for (int i = ans_lhs; i <= ans_rhs; ++i)
+                answer += s[i];
+        }
+        
+        return answer;
+    }
+};
 

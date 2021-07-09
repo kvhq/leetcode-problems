@@ -1,3 +1,7 @@
+// Number: 46
+// Name: Permutations
+// Tags: backtracking
+
 void putNumber(vector<vector<int>>& ans, vector<int>& v, vector<bool>& helper,
               const vector<int>& nums) {
     if (v.size() == nums.size()) {

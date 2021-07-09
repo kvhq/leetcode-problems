@@ -1,3 +1,7 @@
+// Number: 66
+// Name: Plus One
+// Tags: array, math
+
 vector<int> plusOne(vector<int>& digits) {
     vector<int> answer;
     answer.push_back(1);
